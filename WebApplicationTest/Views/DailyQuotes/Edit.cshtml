@@ -1,4 +1,4 @@
-﻿@model WebApplicationTest.Models.Joke
+﻿@model WebApplicationTest.Models.DailyQuote
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,7 +6,7 @@
 
 <h1>Edit</h1>
 
-<h4>Joke</h4>
+<h4>DailyQuote</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,19 +14,19 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="JokeQuestion" class="control-label"></label>
-                <input asp-for="JokeQuestion" class="form-control" />
-                <span asp-validation-for="JokeQuestion" class="text-danger"></span>
+                <label asp-for="Content" class="control-label"></label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="JokeAnswer" class="control-label"></label>
-                <input asp-for="JokeAnswer" class="form-control" />
-                <span asp-validation-for="JokeAnswer" class="text-danger"></span>
+                <label asp-for="Source" class="control-label"></label>
+                <input asp-for="Source" class="form-control"/>
+                <span asp-validation-for="Source" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Creator" class="control-label"></label>
-                <input asp-for="Creator" class="form-control" />
-                <span asp-validation-for="Creator" class="text-danger"></span>
+                <label asp-for="Day" class="control-label"></label>
+                <input asp-for="Day" class="form-control" />
+                <span asp-validation-for="Day" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

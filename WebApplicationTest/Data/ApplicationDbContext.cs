@@ -14,5 +14,6 @@ namespace WebApplicationTest.Data
         {
         }
         public DbSet<WebApplicationTest.Models.Joke> Joke { get; set; }
+        public DbSet<WebApplicationTest.Models.DailyQuote> DailyQuote { get; set; }
     }
 }

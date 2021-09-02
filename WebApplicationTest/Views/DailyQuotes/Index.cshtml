@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplicationTest.Models.Joke>
+﻿@model IEnumerable<WebApplicationTest.Models.DailyQuote>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,10 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.JokeQuestion)
+                @Html.DisplayNameFor(model => model.Content)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.JokeAnswer)
+                @Html.DisplayNameFor(model => model.Source)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Day)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Creator)
@@ -28,10 +31,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.JokeQuestion)
+                "@Html.DisplayFor(modelItem => item.Content)"
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.JokeAnswer)
+                - @Html.DisplayFor(modelItem => item.Source)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Day.Day).@Html.DisplayFor(modelItem => item.Day.Month).@Html.DisplayFor(modelItem => item.Day.Year)@*THIS MOTHERFUCKER HAS NO PROPER DATE CONVERTER*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Creator)

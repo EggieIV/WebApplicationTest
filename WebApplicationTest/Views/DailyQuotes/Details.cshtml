@@ -1,4 +1,4 @@
-﻿@model WebApplicationTest.Models.Joke
+﻿@model WebApplicationTest.Models.DailyQuote
 
 @{
     ViewData["Title"] = "Details";
@@ -7,20 +7,26 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Joke</h4>
+    <h4>DailyQuote</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.JokeQuestion)
+            @Html.DisplayNameFor(model => model.Content)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.JokeQuestion)
+            @Html.DisplayFor(model => model.Content)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.JokeAnswer)
+            @Html.DisplayNameFor(model => model.Source)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.JokeAnswer)
+            @Html.DisplayFor(model => model.Source)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Day)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Day)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Creator)

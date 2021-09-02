@@ -5,16 +5,22 @@ using System.Threading.Tasks;
 
 namespace WebApplicationTest.Models
 {
-    public class Joke
+    public class DailyQuote
     {
         public int Id { get; set; }
-        public string JokeQuestion { get; set; }
-        public string JokeAnswer { get; set; }
+
+        public string Content { get; set; }
+
+        public string Source { get; set; }
+
+        public DateTime Day { get; set; }
+
         public string Creator { get; set; }
 
-        public Joke()
+        public DailyQuote()
         {
-             
+
         }
+
     }
 }

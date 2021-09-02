@@ -11,34 +11,44 @@ using WebApplicationTest.Models;
 
 namespace WebApplicationTest.Controllers
 {
-    public class JokesController : Controller
+    public class DailyQuotesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public JokesController(ApplicationDbContext context)
+        public DailyQuotesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Jokes
+        // GET: DailyQuotes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Joke.ToListAsync());
+            return View(await _context.DailyQuote.ToListAsync());
         }
 
-        // GET: Jokes/ShowSearchForm
+        // GET: DailyQuotes/ShowSearchForm
         public async Task<IActionResult> ShowSearchForm()
         {
             return View("ShowSearchForm");
         }
 
-        // GET: Jokes/ShowSearchForm
+        // GET: DAilyQuotes/ShowSearchForm
         public async Task<IActionResult> ShowSearchResults(string SearchTerm)
         {
-            return View("Index",await _context.Joke.Where(j => j.JokeQuestion.Contains(SearchTerm)).ToListAsync());
+
+           // var viewResult = View("Index", await _context.DailyQuote.Where(d => d.Content.Contains(SearchTerm)
+           //&& d.Creator.Contains(SearchTerm) &&
+           //d.Day.ToString().Contains(SearchTerm) &&
+           //d.Source.Contains(SearchTerm)).ToListAsync());
+
+            return View("Index", await _context.DailyQuote.Where(d => d.Content.Contains(SearchTerm)
+            | d.Creator.Contains(SearchTerm) |
+            d.Day.ToString().Contains(SearchTerm) |
+            d.Source.Contains(SearchTerm)).ToListAsync());
         }
 
-        // GET: Jokes/Details/5
+
+        // GET: DailyQuotes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,43 +56,43 @@ namespace WebApplicationTest.Controllers
                 return NotFound();
             }
 
-            var joke = await _context.Joke
+            var dailyQuote = await _context.DailyQuote
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (joke == null)
+            if (dailyQuote == null)
             {
                 return NotFound();
             }
 
-            return View(joke);
+            return View(dailyQuote);
         }
 
-        // GET: Jokes/Create
+        // GET: DailyQuotes/Create
         [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Jokes/Create
+        // POST: DailyQuotes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,JokeQuestion,JokeAnswer,Creator")] Joke joke)
+        public async Task<IActionResult> Create([Bind("Id,Content,Source,Tag,Creator")] DailyQuote dailyQuote)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(joke);
-                joke.Creator = User.Identity.Name;
+                _context.Add(dailyQuote);
+                dailyQuote.Creator = User.Identity.Name;
+                dailyQuote.Day = DateTime.Now;
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-
             }
-            return View(joke);
+            return View(dailyQuote);
         }
 
-        // GET: Jokes/Edit/5
+        // GET: DailyQuotes/Edit/5
         [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -91,23 +101,23 @@ namespace WebApplicationTest.Controllers
                 return NotFound();
             }
 
-            var joke = await _context.Joke.FindAsync(id);
-            if (joke == null)
+            var dailyQuote = await _context.DailyQuote.FindAsync(id);
+            if (dailyQuote == null)
             {
                 return NotFound();
             }
-            return View(joke);
+            return View(dailyQuote);
         }
 
-        // POST: Jokes/Edit/5
+        // POST: DailyQuotes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,JokeQuestion,JokeAnswer,Creator")] Joke joke)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Content,Source,Day,Creator")] DailyQuote dailyQuote)
         {
-            if (id != joke.Id)
+            if (id != dailyQuote.Id)
             {
                 return NotFound();
             }
@@ -116,12 +126,13 @@ namespace WebApplicationTest.Controllers
             {
                 try
                 {
-                    _context.Update(joke);
+                    _context.Update(dailyQuote);
+                    dailyQuote.Creator = User.Identity.Name;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!JokeExists(joke.Id))
+                    if (!DailyQuoteExists(dailyQuote.Id))
                     {
                         return NotFound();
                     }
@@ -132,10 +143,10 @@ namespace WebApplicationTest.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(joke);
+            return View(dailyQuote);
         }
 
-        // GET: Jokes/Delete/5
+        // GET: DailyQuotes/Delete/5
         [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -144,31 +155,31 @@ namespace WebApplicationTest.Controllers
                 return NotFound();
             }
 
-            var joke = await _context.Joke
+            var dailyQuote = await _context.DailyQuote
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (joke == null)
+            if (dailyQuote == null)
             {
                 return NotFound();
             }
 
-            return View(joke);
+            return View(dailyQuote);
         }
 
-        // POST: Jokes/Delete/5
+        // POST: DailyQuotes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var joke = await _context.Joke.FindAsync(id);
-            _context.Joke.Remove(joke);
+            var dailyQuote = await _context.DailyQuote.FindAsync(id);
+            _context.DailyQuote.Remove(dailyQuote);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool JokeExists(int id)
+        private bool DailyQuoteExists(int id)
         {
-            return _context.Joke.Any(e => e.Id == id);
+            return _context.DailyQuote.Any(e => e.Id == id);
         }
     }
 }
