@@ -43,7 +43,7 @@ namespace WebApplicationTest.Controllers
 
             return View("Index", await _context.DailyQuote.Where(d => d.Content.Contains(SearchTerm)
             | d.Creator.Contains(SearchTerm) |
-            d.Day.ToString().Contains(SearchTerm) |
+            d.Day.Date.ToString().Contains(SearchTerm) |
             d.Source.Contains(SearchTerm)).ToListAsync());
         }
 
