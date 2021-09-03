@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplicationTest.Data;
 using WebApplicationTest.Models;
+using WebApplicationTest.Helper;
 
 namespace WebApplicationTest.Controllers
 {
@@ -83,13 +85,14 @@ namespace WebApplicationTest.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(dailyQuote);
-                dailyQuote.Creator = User.Identity.Name;
-                dailyQuote.Day = DateTime.Now;
-                await _context.SaveChangesAsync();
+                MailHelper mail = new MailHelper();
+                mail.SendMail("J.Eckert@rto.de",dailyQuote.Content + " - " + dailyQuote.Source);
+                mail.SendMail("M.Fischer@rto.de", dailyQuote.Content + " - " + dailyQuote.Source);
                 return RedirectToAction(nameof(Index));
             }
+
             return View(dailyQuote);
+
         }
 
         // GET: DailyQuotes/Edit/5
