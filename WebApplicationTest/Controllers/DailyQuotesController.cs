@@ -91,7 +91,7 @@ namespace WebApplicationTest.Controllers
                 await _context.SaveChangesAsync();
 
                 MailHelper mail = new MailHelper();
-                //mail.SendMail("J.Eckert@rto.de", "\"" + dailyQuote.Content + "\" - " + dailyQuote.Source);
+                mail.SendMail("J.Eckert@rto.de", "\"" + dailyQuote.Content + "\" - " + dailyQuote.Source);
                 //mail.SendMail("J.Rhode@rto.de", "\"" + dailyQuote.Content + "\" - " + dailyQuote.Source);
                 //mail.SendMail("M.Fischer@rto.de", "\"" + dailyQuote.Content + "\" - " + dailyQuote.Source);
                 //mail.SendMail("H.Albers@rto.de", "\"" + dailyQuote.Content + "\" - " + dailyQuote.Source);
